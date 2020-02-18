@@ -1,0 +1,18 @@
+{
+  "name": "jambonz-stats-collector",
+  "version": "0.0.1",
+  "description": "report metrics from jambonz servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jambonz/jambonz-rtpengine-utils.git"
+  },
+  "author": "Dave Horton",
+  "license": "MIT",
+  "dependencies": {
+    "hot-shots": "^6.8.7"
+  }
+}
