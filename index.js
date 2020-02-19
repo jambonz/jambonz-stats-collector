@@ -1,7 +1,7 @@
 const StatsD = require('hot-shots');
 const assert = require('assert');
 const Emitter = require('events');
-
+const debug = require('debug')('jambonz:stats-collector');
 function onError(logger, err) {
   logger.info(err, 'Error sending metrics to datadog');
 }
@@ -21,10 +21,10 @@ class StatsCollector extends Emitter {
   }
 
   _onResourceCount(evt) {
-    this.logger.debug({evt}, 'got resourceCount event');
+    debug({evt}, 'got resourceCount event');
     if (!this.statsd) return;
     const name = `${evt.hostType}.${evt.resource}.count`;
-    this.logger.debug(`sending ${name} with value ${evt.count} to datadog`);
+    debug(`sending ${name} with value ${evt.count} to datadog`);
     this.statsd.gauge(name, evt.count, {hostname: evt.host}, (err, bytes) => {
       if (err) return this.logger.error(err, 'Error sending to datadog');
     });
@@ -39,7 +39,7 @@ class StatsCollector extends Emitter {
       'distribution',
       'gauge'
     ].includes(verb, `unknown stats command ${verb}`));
-    this.logger.debug({args, verb}, 'sending statsd metric');
+    debug({args, verb}, 'sending statsd metric');
     this.statsd[verb].apply(this.statsd, args);
   }
   increment(name, ...args) { return this._command.apply(this, ['increment', name, ...args]); }
